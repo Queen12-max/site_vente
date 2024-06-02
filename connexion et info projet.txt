@@ -1,0 +1,11 @@
+**Nom du Base de donnée : ecom_store**
+
+**Developpés par Tolojanahary-Queen-Mahatoky**
+
+
+**Admin Panel: /admin_area **
+
+**Details login Admin **
+
+Username: admin@mail.com
+Password: Password@123

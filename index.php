@@ -3,175 +3,547 @@
 session_start();
 
 include("includes/db.php");
-include("includes/header.php");
-include("functions/functions.php");
-include("includes/main.php");
+
+if(!isset($_SESSION['admin_email'])){
+
+echo "<script>window.open('login.php','_self')</script>";
+
+}
+
+else {
+
+
+
+
+?>
+
+<?php
+
+$admin_session = $_SESSION['admin_email'];
+
+$get_admin = "select * from admins  where admin_email='$admin_session'";
+
+$run_admin = mysqli_query($con,$get_admin);
+
+$row_admin = mysqli_fetch_array($run_admin);
+
+$admin_id = $row_admin['admin_id'];
+
+$admin_name = $row_admin['admin_name'];
+
+$admin_email = $row_admin['admin_email'];
+
+$admin_image = $row_admin['admin_image'];
+
+$admin_country = $row_admin['admin_country'];
+
+$admin_job = $row_admin['admin_job'];
+
+$admin_contact = $row_admin['admin_contact'];
+
+$admin_about = $row_admin['admin_about'];
+
+
+$get_products = "SELECT * FROM products";
+$run_products = mysqli_query($con,$get_products);
+$count_products = mysqli_num_rows($run_products);
+
+$get_customers = "SELECT * FROM customers";
+$run_customers = mysqli_query($con,$get_customers);
+$count_customers = mysqli_num_rows($run_customers);
+
+$get_p_categories = "SELECT * FROM product_categories";
+$run_p_categories = mysqli_query($con,$get_p_categories);
+$count_p_categories = mysqli_num_rows($run_p_categories);
+
+
+$get_total_orders = "SELECT * FROM customer_orders";
+$run_total_orders = mysqli_query($con,$get_total_orders);
+$count_total_orders = mysqli_num_rows($run_total_orders);
+
+
+$get_pending_orders = "SELECT * FROM customer_orders WHERE order_status='pending'";
+$run_pending_orders = mysqli_query($con,$get_pending_orders);
+$count_pending_orders = mysqli_num_rows($run_pending_orders);
+
+$get_completed_orders = "SELECT * FROM customer_orders WHERE order_status='Complete'";
+$run_completed_orders = mysqli_query($con,$get_completed_orders);
+$count_completed_orders = mysqli_num_rows($run_completed_orders);
+
+
+$get_total_earnings = "SELECT SUM( due_amount) as Total FROM customer_orders WHERE order_status = 'Complete'";
+$run_total_earnings = mysqli_query($con, $get_total_earnings);
+$row = mysqli_fetch_assoc($run_total_earnings);                       
+$count_total_earnings = $row['Total'];
+
+
+$get_coupons = "SELECT * FROM coupons";
+$run_coupons = mysqli_query($con,$get_coupons);
+$count_coupons = mysqli_num_rows($run_coupons);
+
 
 ?>
 
 
-  <!-- Cover -->
-  <main>
-    <div class="hero">
-      <a href="shop.php" class="btn1">Voir tous les  produits
-</a>
-    </div>
-    <!-- Main -->
-    <div class="wrapper">
-            <h1>Collection en vedette<h1>
-            
-      </div>
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Admin Panel</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<link href="css/style.css" rel="stylesheet">
+
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" >
+<link rel="shortcut icon" href="//cdn.shopify.com/s/files/1/2484/9148/files/SDQSDSQ_32x32.png?v=1511436147" type="image/png">
+
+</head>
+
+<body>
+
+<div id="wrapper"><!-- wrapper Starts -->
+
+<?php include("includes/sidebar.php");  ?>
+
+<div id="page-wrapper"><!-- page-wrapper Starts -->
+
+<div class="container-fluid"><!-- container-fluid Starts -->
+
+<?php
+
+if(isset($_GET['dashboard'])){
+
+include("dashboard.php");
+
+}
+
+if(isset($_GET['insert_product'])){
+
+include("insert_product.php");
+
+}
+
+if(isset($_GET['view_products'])){
+
+include("view_products.php");
+
+}
+
+if(isset($_GET['delete_product'])){
+
+include("delete_product.php");
+
+}
+
+if(isset($_GET['edit_product'])){
+
+include("edit_product.php");
+
+}
+
+if(isset($_GET['insert_p_cat'])){
+
+include("insert_p_cat.php");
+
+}
+
+if(isset($_GET['view_p_cats'])){
+
+include("view_p_cats.php");
+
+}
+
+if(isset($_GET['delete_p_cat'])){
+
+include("delete_p_cat.php");
+
+}
+
+if(isset($_GET['edit_p_cat'])){
+
+include("edit_p_cat.php");
+
+}
+
+if(isset($_GET['insert_cat'])){
+
+include("insert_cat.php");
+
+}
+
+if(isset($_GET['view_cats'])){
+
+include("view_cats.php");
+
+}
+
+if(isset($_GET['delete_cat'])){
+
+include("delete_cat.php");
+
+}
+
+if(isset($_GET['edit_cat'])){
+
+include("edit_cat.php");
+
+}
+
+if(isset($_GET['insert_slide'])){
+
+include("insert_slide.php");
+
+}
+
+
+if(isset($_GET['view_slides'])){
+
+include("view_slides.php");
+
+}
+
+if(isset($_GET['delete_slide'])){
+
+include("delete_slide.php");
+
+}
+
+
+if(isset($_GET['edit_slide'])){
+
+include("edit_slide.php");
+
+}
+
+
+if(isset($_GET['view_customers'])){
+
+include("view_customers.php");
+
+}
+
+if(isset($_GET['customer_delete'])){
+
+include("customer_delete.php");
+
+}
+
+
+if(isset($_GET['view_orders'])){
+
+include("view_orders.php");
+
+}
+
+if(isset($_GET['order_delete'])){
+
+include("order_delete.php");
+
+}
+
+
+if(isset($_GET['view_payments'])){
+
+include("view_payments.php");
+
+}
+
+if(isset($_GET['payment_delete'])){
+
+include("payment_delete.php");
+
+}
+
+if(isset($_GET['insert_user'])){
+
+include("insert_user.php");
+
+}
+
+if(isset($_GET['view_users'])){
+
+include("view_users.php");
+
+}
+
+
+if(isset($_GET['user_delete'])){
+
+include("user_delete.php");
+
+}
 
 
 
-    <div id="content" class="container"><!-- container Starts -->
+if(isset($_GET['user_profile'])){
 
-    <div class="row"><!-- row Starts -->
+include("user_profile.php");
 
-    <?php
+}
 
-    getPro();
+if(isset($_GET['insert_box'])){
 
-    ?>
+include("insert_box.php");
 
-    </div><!-- row Ends -->
+}
 
-    </div><!-- container Ends -->
-    <!-- FOOTER -->
-    <footer class="page-footer">
+if(isset($_GET['view_boxes'])){
 
-      <div class="footer-nav">
-        <div class="container clearfix">
+include("view_boxes.php");
 
-          <div class="footer-nav__col footer-nav__col--info">
-            <div class="footer-nav__heading">Information</div>
-            <ul class="footer-nav__list">
-              <li class="footer-nav__item">
-                <a href="#" class="footer-nav__link">La marque</a>
-              </li>
-              <li class="footer-nav__item">
-                <a href="#" class="footer-nav__link">Magasins locaux</a>
-              </li>
-              <li class="footer-nav__item">
-                <a href="#" class="footer-nav__link">Service Client</a>
-              </li>
-              <li class="footer-nav__item">
-                <a href="#" class="footer-nav__link">Privacy &amp; cookies</a>
-              </li>
-              <li class="footer-nav__item">
-                <a href="#" class="footer-nav__link">Site map</a>
-              </li>
-            </ul>
-          </div>
+}
 
-          <div class="footer-nav__col footer-nav__col--whybuy">
-            <div class="footer-nav__heading">Pourquoi acheter chez nous</div>
-            <ul class="footer-nav__list">
-              <li class="footer-nav__item">
-                <a href="#" class="footer-nav__link">Expédition &amp; retour</a>
-              </li>
-              <li class="footer-nav__item">
-                <a href="#" class="footer-nav__link">Expédition sécurisée</a>
-              </li>
-              <li class="footer-nav__item">
-                <a href="#" class="footer-nav__link">Témoignages</a>
-              </li>
-              <li class="footer-nav__item">
-                <a href="#" class="footer-nav__link">Primé</a>
-              </li>
-              <li class="footer-nav__item">
-                <a href="#" class="footer-nav__link">Commerce éthique</a>
-              </li>
-            </ul>
-          </div>
+if(isset($_GET['delete_box'])){
 
-          <div class="footer-nav__col footer-nav__col--account">
-            <div class="footer-nav__heading">Votre compte</div>
-            <ul class="footer-nav__list">
-              <li class="footer-nav__item">
-                <a href="#" class="footer-nav__link">Se connecter</a>
-              </li>
-              <li class="footer-nav__item">
-                <a href="#" class="footer-nav__link">Registre</a>
-              </li>
-              <li class="footer-nav__item">
-                <a href="#" class="footer-nav__link">Voir panier</a>
-              </li>
-              <li class="footer-nav__item">
-                <a href="#" class="footer-nav__link">Consulter votre lookbook</a>
-              </li>
-              <li class="footer-nav__item">
-                <a href="#" class="footer-nav__link">Suivre commande</a>
-              </li>
-              <li class="footer-nav__item">
-                <a href="#" class="footer-nav__link">Mettre à jour information</a>
-              </li>
-            </ul>
-          </div>
+include("delete_box.php");
+
+}
+
+if(isset($_GET['edit_box'])){
+
+include("edit_box.php");
+
+}
+
+if(isset($_GET['insert_term'])){
+
+include("insert_term.php");
+
+}
+
+if(isset($_GET['view_terms'])){
+
+include("view_terms.php");
+
+}
+
+if(isset($_GET['delete_term'])){
+
+include("delete_term.php");
+
+}
+
+if(isset($_GET['edit_term'])){
+
+include("edit_term.php");
+
+}
+
+if(isset($_GET['edit_css'])){
+
+include("edit_css.php");
+
+}
+
+if(isset($_GET['insert_manufacturer'])){
+
+include("insert_manufacturer.php");
+
+}
+
+if(isset($_GET['view_manufacturers'])){
+
+include("view_manufacturers.php");
+
+}
+
+if(isset($_GET['delete_manufacturer'])){
+
+include("delete_manufacturer.php");
+
+}
+
+if(isset($_GET['edit_manufacturer'])){
+
+include("edit_manufacturer.php");
+
+}
 
 
-          <div class="footer-nav__col footer-nav__col--contacts">
-            <div class="footer-nav__heading">Détails contact</div>
-            <address class="address">
-            Head Office: E-BAZAR.<br>
-            Belle Rose p.108.
-          </address>
-            <div class="phone">
-              Telephone:
-              <a class="phone__number" href="tel:0123456789">032-65-766-80</a>
-            </div>
-            <div class="email">
-              Email:
-              <a href="mailto:support@yourwebsite.com" class="email__addr">toljahjari21@gmail.com</a>
-            </div>
-          </div>
+if(isset($_GET['insert_coupon'])){
 
-        </div>
-      </div>
+include("insert_coupon.php");
 
-      <!-- <div class="banners">
-        <div class="container clearfix">
+}
 
-          <div class="banner-award">
-            <span>Award winner</span><br> Fashion awards 2016
-          </div>
+if(isset($_GET['view_coupons'])){
 
-          <div class="banner-social">
-            <a href="#" class="banner-social__link">
-            <i class="icon-facebook"></i>
-          </a>
-            <a href="#" class="banner-social__link">
-            <i class="icon-twitter"></i>
-          </a>
-            <a href="#" class="banner-social__link">
-            <i class="icon-instagram"></i>
-          </a>
-            <a href="#" class="banner-social__link">
-            <i class="icon-pinterest-circled"></i>
-          </a>
-          </div>
+include("view_coupons.php");
 
-        </div>
-      </div> -->
+}
 
-      <div class="page-footer__subline">
-        <div class="container clearfix">
+if(isset($_GET['delete_coupon'])){
 
-          <div class="copyright">
-            &copy; <?php echo date("Y");?> Site de Vente&trade;
-          </div>
+include("delete_coupon.php");
 
-          <div class="developer">
-            Developpés par Tolojanahary-Queen-Mahatoky
-          </div>
+}
 
-          <div class="designby">
-            Concu par Tolojanahary-Queen-Mahatoky
-          </div>
 
-        </div>
-      </div>
-    </footer>
+if(isset($_GET['edit_coupon'])){
+
+include("edit_coupon.php");
+
+}
+
+
+if(isset($_GET['insert_icon'])){
+
+include("insert_icon.php");
+
+}
+
+
+if(isset($_GET['view_icons'])){
+
+include("view_icons.php");
+
+}
+
+if(isset($_GET['delete_icon'])){
+
+include("delete_icon.php");
+
+}
+
+if(isset($_GET['edit_icon'])){
+
+include("edit_icon.php");
+
+}
+
+if(isset($_GET['insert_bundle'])){
+
+include("insert_bundle.php");
+
+}
+
+if(isset($_GET['view_bundles'])){
+
+include("view_bundles.php");
+
+}
+
+if(isset($_GET['delete_bundle'])){
+
+include("delete_bundle.php");
+
+}
+
+
+if(isset($_GET['edit_bundle'])){
+
+include("edit_bundle.php");
+
+}
+
+
+if(isset($_GET['insert_rel'])){
+
+include("insert_rel.php");
+
+}
+
+if(isset($_GET['view_rel'])){
+
+include("view_rel.php");
+
+}
+
+if(isset($_GET['delete_rel'])){
+
+include("delete_rel.php");
+
+}
+
+
+if(isset($_GET['edit_rel'])){
+
+include("edit_rel.php");
+
+}
+
+
+if(isset($_GET['edit_contact_us'])){
+
+include("edit_contact_us.php");
+
+}
+
+if(isset($_GET['insert_enquiry'])){
+
+include("insert_enquiry.php");
+
+}
+
+
+if(isset($_GET['view_enquiry'])){
+
+include("view_enquiry.php");
+
+}
+
+if(isset($_GET['delete_enquiry'])){
+
+include("delete_enquiry.php");
+
+}
+
+if(isset($_GET['edit_enquiry'])){
+
+include("edit_enquiry.php");
+
+}
+
+
+if(isset($_GET['edit_about_us'])){
+
+include("edit_about_us.php");
+
+}
+
+
+if(isset($_GET['insert_store'])){
+
+include("insert_store.php");
+
+}
+
+if(isset($_GET['view_store'])){
+
+include("view_store.php");
+
+}
+
+if(isset($_GET['delete_store'])){
+
+include("delete_store.php");
+
+}
+
+if(isset($_GET['edit_store'])){
+
+include("edit_store.php");
+
+}
+
+?>
+
+</div><!-- container-fluid Ends -->
+
+</div><!-- page-wrapper Ends -->
+
+</div><!-- wrapper Ends -->
+
+<script src="js/jquery.min.js"></script>
+
+<script src="js/bootstrap.min.js"></script>
+
+
 </body>
 
+
 </html>
+
+<?php } ?>
